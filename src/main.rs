@@ -5,6 +5,7 @@ mod d2;
 mod d3;
 mod d4;
 mod d5;
+mod d6;
 
 fn main() {
     let start = Instant::now();
@@ -57,4 +58,13 @@ fn main() {
     let end = start.elapsed().as_micros();
     println!("Day 5.2\t{}us\t{}", end, result);
 
+    let start = Instant::now();
+    let result = d6::get_solution_1(); 
+    let end = start.elapsed().as_micros();
+    println!("Day 6.1\t{}us\t{}", end, result);
+
+    let start = Instant::now();
+    let result = d6::get_solution_2(); 
+    let end = start.elapsed().as_micros();
+    println!("Day 6.2\t{}us\t{}", end, result);
 }
