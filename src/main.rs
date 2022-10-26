@@ -9,7 +9,6 @@ mod d6;
 mod d7;
 
 fn main() {
-    let start_all = Instant::now();
     let start = Instant::now();
     let result = d1::get_solution_1();
     let end = start.elapsed().as_micros();
@@ -79,7 +78,4 @@ fn main() {
     let result = d7::get_solution_2(); 
     let end = start.elapsed().as_micros();
     println!("Day 7.2\t{}us\t{}", end, result);
-
-    let end_all = start_all.elapsed().as_micros();
-    println!("Total: {}us", end_all)
 }
