@@ -1,8 +1,8 @@
-use std::{collections::HashMap, fmt::{Display, Write}, ops::{Deref, DerefMut}, thread, cmp::Ordering };
+use std::{collections::HashMap, fmt::{Display, Write}, ops::{Deref, DerefMut}, thread };
 
 const GRAPH_DIM: usize = 8;
 
-const partitions: [(usize, usize); 56] = [
+const NODE_COMBINATIONS: [(usize, usize); 56] = [
     (0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (0, 7),
     (1, 0), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7),
     (2, 0), (2, 1), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7),
@@ -85,7 +85,7 @@ fn calculate_all_costs(g: Graph) -> Vec<Vec<u16>> {
     let mut handles = Vec::new();
     let mut all_costs = Vec::new();
     
-    for p in [&partitions[..28], &partitions[28..]] {
+    for p in [&NODE_COMBINATIONS[..28], &NODE_COMBINATIONS[28..]] {
         let g_clone = g.clone();
         let handle = thread::spawn(move || {
             let mut costs = Vec::new();
