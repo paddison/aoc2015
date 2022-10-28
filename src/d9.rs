@@ -7,7 +7,7 @@ struct Edge(usize, usize, usize); // left, right, cost
 #[derive(Debug, Clone)]
 struct Graph {
     matrix: [[usize; GRAPH_DIM]; GRAPH_DIM],
-    nodes: HashMap<usize, &'static str>,
+    // nodes: HashMap<usize, &'static str>,
 }
 
 impl Graph {
@@ -63,13 +63,13 @@ impl Display for Graph {
             let _ = write!(string, "{:?}\n", line);
         }
 
-        write!(f, "{}\n{:?}", string, self.nodes)
+        write!(f, "{}", string)
     }
 }
 
 fn parse(input: &'static str) -> Graph {
     let mut lookup_table = HashMap::new();
-    let mut nodes = HashMap::new();
+    // let mut nodes = HashMap::new();
     let mut matrix = [[0; GRAPH_DIM]; GRAPH_DIM];
     let mut id_count = 0;
     
@@ -80,14 +80,14 @@ fn parse(input: &'static str) -> Graph {
     for (left, right, cost) in data {
         let left_id = *lookup_table.entry(left).or_insert_with(|| { let id = id_count; id_count += 1; id });
         let right_id = *lookup_table.entry(right).or_insert_with(|| { let id = id_count; id_count += 1; id });
-        nodes.insert(left_id, left);
-        nodes.insert(right_id, right);
+        // nodes.insert(left_id, left);
+        // nodes.insert(right_id, right);
 
         matrix[left_id][right_id] = cost;
         matrix[right_id][left_id] = cost; // because the graph is bidirectional
     }
 
-    Graph{ matrix, nodes }
+    Graph{ matrix }
 }
 
 fn calculate_all_costs(g: Graph) -> Vec<usize>{
