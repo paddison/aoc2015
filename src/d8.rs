@@ -31,7 +31,7 @@ fn calculate_actual_length(string: &str, hex_patterns: &[&str]) -> usize {
     - hex_pattern_count * 2
 }
 
-fn calculate_encoded_length(string: &str, hex_patterns: &[&str]) -> usize {
+fn calculate_encoded_length(string: &str) -> usize {
     string.len() 
     + string.matches("\\").count()
     + string.matches("\"").count()
@@ -45,14 +45,14 @@ pub fn get_solution_1() -> usize {
 }
 
 pub fn get_solution_2() -> usize {
-    parse(include_str!("../data/d8.txt")).iter().fold(0, |acc, string| acc + calculate_encoded_length(string, &HEX_PATTERNS) - (string.len() + 2))
+    parse(include_str!("../data/d8.txt")).iter().fold(0, |acc, string| acc + calculate_encoded_length(string) - (string.len() + 2))
 }
 
 #[test]
 fn test_manually() {
     let test_input = parse(include_str!("../data/d8_test.txt"));
     for string in &test_input {
-        println!("{:?}: {}", string, calculate_encoded_length(string, &HEX_PATTERNS));
+        println!("{:?}: {}", string, calculate_encoded_length(string));
     }
 }
 
@@ -63,7 +63,7 @@ fn test_calculate_actual_length() {
 
 #[test]
 fn test_calculate_encoded_length() {
-    assert_eq!(19, parse(include_str!("../data/d8_test.txt")).iter().fold(0, |acc, string| acc + calculate_encoded_length(string, &HEX_PATTERNS) - (string.len() + 2)))
+    assert_eq!(19, parse(include_str!("../data/d8_test.txt")).iter().fold(0, |acc, string| acc + calculate_encoded_length(string) - (string.len() + 2)))
 }
 
 // only used this once to print so i don't have to type each hex digit

@@ -38,25 +38,3 @@ fn widen(seq: String) -> String {
 
     widened_string
 }
-
-
-#[test]
-fn test_widen() {
-    let mut seq = String::from("1");
-    seq = widen(seq);
-    assert_eq!(seq, "11".to_string());
-    
-    seq = widen(seq);
-    assert_eq!(seq, "21".to_string());
-
-    seq = widen(seq);
-    assert_eq!(seq, "1211".to_string());
-
-    seq = widen(seq);
-    assert_eq!(seq, "111221".to_string());
-
-    seq = widen(seq);
-    assert_eq!(seq, "312211".to_string());
-    
-
-}
