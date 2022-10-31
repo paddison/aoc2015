@@ -9,43 +9,10 @@ impl Graph {
     fn add_myself(&mut self) {
         let new_size = self[0].len() + 1;
         for row in &mut self.adj_m {
-            row.push(isize::MIN);
+            row.push(0);
         }
-        self.adj_m.push(vec![isize::MIN; self.adj_m[0].len()]);
+        self.adj_m.push(vec![0; self.adj_m[0].len()]);
         self.adj_m[new_size - 1][new_size - 1] = 0;
-    }
-    fn remove_node(&mut self, id: usize) {
-        for other_id in 0..self.adj_m.len() {
-            self[id][other_id] = 0;
-            self[other_id][id] = 0;
-        }
-    }
-
-    fn remove_edge(&mut self, id: usize, other_id: usize) {
-        self[id][other_id] = 0;
-        self[other_id][id] = 0;
-    }
-
-    fn make_node_unreachable(&mut self, id: usize) {
-        for other_id in 0..self.adj_m.len() {
-            self[other_id][id] = 0;
-        }
-    }
-
-    // neighbour_id, cost
-    fn get_neighbours(&self, id: usize) -> Vec<(usize, isize)> {
-        let mut neighbours = Vec::new();
-        
-        for (neighbour_id, cost) in self[id].iter().enumerate() {
-            if cost != &0 {
-                if cost == &isize::MIN {
-                    neighbours.push((neighbour_id, 0));
-                } else {
-                    neighbours.push((neighbour_id, *cost));
-                }
-            }
-        }
-        neighbours
     }
 }
 
@@ -73,38 +40,6 @@ impl Display for Graph {
         }
 
         write!(f, "{}", string)
-    }
-}
-
-fn calc_optimal_arrangement(g: Graph) -> isize {
-    let mut costs = Vec::new();
-    for start_node in 0..g.adj_m.len() {
-        for (neighbour, edge_cost) in g.get_neighbours(start_node) {
-            if neighbour != start_node {
-                let mut g_copy = g.clone();
-                let other_edge_cost = g[neighbour][start_node];
-                g_copy.remove_edge(start_node, neighbour);
-                brute_force_all_costs(start_node, neighbour, g_copy, 0 + edge_cost + other_edge_cost, &mut costs);
-            }
-        }
-    }
-
-    *costs.iter().max().unwrap()
-}
-
-fn brute_force_all_costs(start_node: usize, cur_node: usize, g: Graph, cost: isize, costs: &mut Vec<isize>) {
-    let edges = g.get_neighbours(cur_node);
-    if edges.len() == 1 {
-        costs.push(cost + edges[0].1 + g[edges[0].0][cur_node]);
-        return;
-    }
-    for (neighbour, edge_cost) in edges {
-        if neighbour != start_node {
-            let mut g_copy = g.clone();
-            let other_edge_cost = g_copy[neighbour][cur_node];
-            g_copy.make_node_unreachable(cur_node);
-            brute_force_all_costs(start_node, neighbour, g_copy, cost + edge_cost + other_edge_cost, costs);
-        }
     }
 }
 
@@ -139,13 +74,63 @@ fn parse(input: &'static str) -> Graph {
 
 pub fn get_solution_1() -> isize {
     let g = parse(include_str!("../data/d13.txt"));
-    calc_optimal_arrangement(g)
+    calculate_costs(&g)
 }
 
 pub fn get_solution_2() -> isize {
     let mut g = parse(include_str!("../data/d13.txt"));
     g.add_myself();
-    calc_optimal_arrangement(g)
+    calculate_costs(&g)
+}
+
+fn get_all_circles(g: &Graph) -> Vec<Vec<usize>> {
+    // it shouldn't matter where we start, since we just want to go in a circle
+    let n_persons = g.len();
+    let mut all_perms = Vec::new();
+    let mut initial = Vec::new();
+    for i in 1..n_persons {
+        initial.push(i);
+    }
+    // all_perms.push(initial.clone());
+    heap_permutations(initial.len(), &mut initial, &mut all_perms);
+    for perm in all_perms.iter_mut() {
+        perm.insert(0, 0);
+    }
+    all_perms
+}
+
+// same implementation as https://www.geeksforgeeks.org/heaps-algorithm-for-generating-permutations
+fn heap_permutations(k: usize, perm: &mut Vec<usize>, all_perms: &mut Vec<Vec<usize>>) {
+    if k == 1 {
+        all_perms.push(perm.clone())
+    } else {
+        for i in 0..k {
+            heap_permutations(k - 1, perm, all_perms);
+
+            if k % 2 == 0 {
+                perm.swap(i, k - 1);
+            } else {
+                perm.swap(0, k - 1);
+            }
+        }
+    }
+}
+
+fn calculate_costs(g: &Graph) -> isize {
+    let perms = get_all_circles(&g);
+    let mut costs = Vec::new();
+    let n_persons = g.adj_m.len();
+    for perm in perms {
+        let mut cost = 0;
+        for (i, cur_person) in perm.iter().enumerate() {
+            let neighbour = perm[(i + 1) % n_persons];
+            cost += g[neighbour][*cur_person];
+            cost += g[*cur_person][neighbour];
+        }
+        costs.push(cost);
+    }
+
+    *costs.iter().max().unwrap()
 }
 
 #[test]
@@ -162,14 +147,13 @@ fn test_parse() {
 }
 
 #[test]
-fn test_calculate_optimal_arrangement() {
+fn test_get_all_perms() {
     let g = parse(include_str!("../data/d13_test.txt"));
-    assert_eq!(calc_optimal_arrangement(g), 330);
+    println!("{:?}", get_all_circles(&g));
 }
 
 #[test]
-fn test_add_myself() {
-    let mut g = parse(include_str!("../data/d13.txt"));
-    g.add_myself();
-    println!("{}", g);
+fn test_calc_all_costs_with_permutation() {
+    let g = parse(include_str!("../data/d13_test.txt"));
+    assert_eq!(330, calculate_costs(&g));
 }
