@@ -91,7 +91,7 @@ fn get_all_circles(g: &Graph) -> Vec<Vec<usize>> {
     for i in 1..n_persons {
         initial.push(i);
     }
-    // all_perms.push(initial.clone());
+    
     heap_permutations(initial.len(), &mut initial, &mut all_perms);
     for perm in all_perms.iter_mut() {
         perm.insert(0, 0);
