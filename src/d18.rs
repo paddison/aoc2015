@@ -5,7 +5,6 @@ struct Grid {
 }
 
 impl Grid {
-
     #[inline(always)]
     fn idx(&self, row: usize, col: usize) -> usize {
         row * self.dim.1 + col
