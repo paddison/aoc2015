@@ -17,6 +17,7 @@ mod d14;
 mod d15;
 mod d16;
 mod d17;
+mod d18;
 
 fn main() {
     let start = Instant::now();
@@ -188,4 +189,14 @@ fn main() {
     let result = d17::get_solution_2(); 
     let end = start.elapsed().as_micros();
     println!("Day 17.2\t{}us\t{}", end, result);
+
+    let start = Instant::now();
+    let result = d18::get_solution_1(); 
+    let end = start.elapsed().as_micros();
+    println!("Day 18.1\t{}us\t{}", end, result);
+
+    let start = Instant::now();
+    let result = d18::get_solution_2(); 
+    let end = start.elapsed().as_micros();
+    println!("Day 18.2\t{}us\t{}", end, result);
 }
