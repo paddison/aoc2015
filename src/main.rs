@@ -200,4 +200,14 @@ fn main() {
     let result = d18::get_solution_2(); 
     let end = start.elapsed().as_micros();
     println!("Day 18.2\t{}us\t{}", end, result);
+
+    let start = Instant::now();
+    let result = d19::get_solution_1(); 
+    let end = start.elapsed().as_micros();
+    println!("Day 19.1\t{}us\t{}", end, result);
+
+    let start = Instant::now();
+    let result = d19::get_solution_2(); 
+    let end = start.elapsed().as_micros();
+    println!("Day 19.2\t{}us\t{}", end, result);
 }
