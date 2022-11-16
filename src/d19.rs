@@ -1,7 +1,7 @@
-use std::collections::{HashMap, HashSet, VecDeque};
+use std::collections::{HashMap, HashSet};
 
 const MOLECULE: &str = "CRnSiRnCaPTiMgYCaPTiRnFArSiThFArCaSiThSiThPBCaCaSiRnSiRnTiTiMgArPBCaPMgYPTiRnFArFArCaSiRnBPMgArPRnCaPTiRnFArCaSiThCaCaFArPBCaCaPTiTiRnFArCaSiRnSiAlYSiThRnFArArCaSiRnBFArCaCaSiRnSiThCaCaCaFYCaPTiBCaSiThCaSiThPMgArSiRnCaPBFYCaCaFArCaCaCaCaSiThCaSiRnPRnFArPBSiThPRnFArSiRnMgArCaFYFArCaSiRnSiAlArTiTiTiTiTiTiTiRnPMgArPTiTiTiBSiRnSiAlArTiTiRnPMgArCaFYBPBPTiRnSiRnMgArSiThCaFArCaSiThFArPRnFArCaSiRnTiBSiThSiRnSiAlYCaFArPRnFArSiThCaFArCaCaSiThCaCaCaSiRnPRnCaFArFYPMgArCaPBCaPBSiRnFYPBCaFArCaSiAl";
-const TEST_MOLECULE: &str = "HOH";
+const _TEST_MOLECULE: &str = "HOH";
 
 fn parse(input: &'static str) -> HashMap<&str, Vec<&str>> {
     let mut replacements = HashMap::new();
@@ -74,7 +74,7 @@ fn flip_hash_map<'a>(map: HashMap<&'a str, Vec<&'a str>>) -> HashMap<&'a str, &'
 #[test]
 fn test_create_molecules() {
     let replacements = parse(include_str!("../data/d19_test.txt"));
-    let molecules = create_molecules(&replacements, TEST_MOLECULE);
+    let molecules = create_molecules(&replacements, _TEST_MOLECULE);
     println!("{:?}", molecules);
 }
 
@@ -82,7 +82,7 @@ fn test_create_molecules() {
 fn test_create_medicine() {
     let replacements = parse(include_str!("../data/d19_test.txt"));
     let flipped = flip_hash_map(replacements);
-    let steps = replace(&flipped, TEST_MOLECULE.to_string());
+    let steps = replace(&flipped, _TEST_MOLECULE.to_string());
     println!("{:?}", steps)
 }
 
