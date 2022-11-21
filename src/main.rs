@@ -21,6 +21,7 @@ mod d18;
 mod d19;
 mod d20;
 mod d21;
+mod d22;
 
 fn main() {
     let start = Instant::now();
@@ -232,4 +233,14 @@ fn main() {
     let result = d21::get_solution_2(); 
     let end = start.elapsed().as_micros();
     println!("Day 21.2\t{}us\t{}", end, result);
+
+    let start = Instant::now();
+    let result = d22::get_solution_1(); 
+    let end = start.elapsed().as_micros();
+    println!("Day 22.1\t{}us\t{}", end, result);
+
+    let start = Instant::now();
+    let result = d22::get_solution_2(); 
+    let end = start.elapsed().as_micros();
+    println!("Day 22.2\t{}us\t{}", end, result);
 }
