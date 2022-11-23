@@ -24,8 +24,11 @@ mod d21;
 mod d22;
 mod d23;
 mod d24;
+mod d25;
 
 fn main() {
+    let start_all = Instant::now();
+
     let start = Instant::now();
     let result = d1::get_solution_1();
     let end = start.elapsed().as_micros();
@@ -265,4 +268,12 @@ fn main() {
     let result = d24::get_solution_2(); 
     let end = start.elapsed().as_micros();
     println!("Day 24.2\t{}us\t{}", end, result);
+
+    let start = Instant::now();
+    let result = d25::get_solution_1(); 
+    let end = start.elapsed().as_nanos();
+    println!("Day 25.1\t{}ns\t{}", end, result);
+
+    let end_all = start_all.elapsed().as_millis();
+    println!("\nTotal runtime:\t{}ms (excluding day 4.1, 4.2, 10.2, 20.1 and 20.2", end_all);
 }
