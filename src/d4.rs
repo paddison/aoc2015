@@ -1,4 +1,4 @@
-const _INPUT: &'static str = "ckczppom";
+const _INPUT: & str = "ckczppom";
 // use md5;
 
 // hardcode the solutions, because they can only be brute forced, 
@@ -32,7 +32,7 @@ fn _find_num(pat: &str) -> usize {
 } 
 
 fn _get_hash(n: usize) -> String {
-    let _key_with_n = format!("{}{}", _INPUT, n.to_string());
+    let _key_with_n = format!("{}{}", _INPUT, n);
     // let digest = md5::compute(_key_with_n);
     let digest = 123;
     format!("{:x}", digest)

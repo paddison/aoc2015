@@ -1,3 +1,5 @@
+use std::cmp::Ordering;
+
 fn parse(input: &'static str) -> Vec<usize> {
     input.lines().map(|l| l.parse::<usize>().unwrap()).collect()
 }
@@ -8,15 +10,18 @@ fn build_all_sums(required_sum: usize, cur_sum: usize, packages: &[usize], group
     }
     for (i, package) in packages.iter().enumerate() {
         let mut group_clone = group.clone();
-        if package + cur_sum < required_sum {
-            group_clone.push(*package);
-            let min_group = build_all_sums(required_sum, cur_sum + package, &packages[i + 1..], group_clone, max_packages);
-            if min_group.is_some() {
-                return min_group;
-            } 
-        } else if package + cur_sum == required_sum {
-            group_clone.push(*package);
-            return Some(group_clone);
+        match (package + cur_sum).cmp(&required_sum) {
+            Ordering::Less => {
+                group_clone.push(*package);
+                if let Some(min_group) = build_all_sums(required_sum, cur_sum + package, &packages[i + 1..], group_clone, max_packages) {
+                    return Some(min_group);
+                }
+            },
+            Ordering::Equal => {
+                group_clone.push(*package);
+                return Some(group_clone);
+            },
+            _ => (),
         }
     }
     None

@@ -35,8 +35,8 @@ fn do_turn(mut player: Player, mut boss: Boss, is_player_turn: bool, cur_cost: i
                 return;
             }
 
-            let mut new_boss = boss.clone();
-            let mut new_player = player.clone();
+            let mut new_boss = boss;
+            let mut new_player = player;
 
             new_player.cast(&spell, &mut new_boss);
 
@@ -84,22 +84,16 @@ impl Player {
         }
 
 
-        if let None = self.shield {
-            if self.mp >= SHIELD_COST {
-                spells.push(Spell::Shield);
-            }
+        if self.shield.is_none() && self.mp >= SHIELD_COST {
+            spells.push(Spell::Shield);
         }
 
-        if let None = self.recharge {
-            if self.mp >= RECHARGE_COST {
-                spells.push(Spell::Recharge);
-            }
+        if self.recharge.is_none() && self.mp >= RECHARGE_COST {
+            spells.push(Spell::Recharge);
         }
 
-        if let None = boss.poison {
-            if self.mp >= POISON_COST {
-                spells.push(Spell::Poison);
-            }
+        if boss.poison.is_none() && self.mp >= POISON_COST {
+            spells.push(Spell::Poison);
         }
 
         spells

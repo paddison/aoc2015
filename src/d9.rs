@@ -54,7 +54,7 @@ impl Display for Graph {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let mut string = String::new();
         for line in &self.0 {
-            let _ = write!(string, "{:?}\n", line);
+            let _ = writeln!(string, "{:?}", line);
         }
 
         write!(f, "{}", string)

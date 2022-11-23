@@ -36,7 +36,7 @@ impl Display for Graph {
 
         let mut string = String::new();
         for line in &self.adj_m {
-            let _ = write!(string, "{:?}\n", line);
+            let _ = writeln!(string, "{:?}", line);
         }
 
         write!(f, "{}", string)
@@ -48,7 +48,7 @@ fn parse(input: &'static str) -> Graph {
     let mut person_id_count = 0;
     let seating_data = input.split('\n')
                             .map(|line| line[..line.len() - 1].split_whitespace().collect::<Vec<&str>>())
-                            .map(|split_line| (split_line[0], split_line[10], if split_line[2] == "lose" { split_line[3].parse::<isize>().unwrap() * -1 } else { split_line[3].parse::<isize>().unwrap()}))
+                            .map(|split_line| (split_line[0], split_line[10], if split_line[2] == "lose" { -split_line[3].parse::<isize>().unwrap() } else { split_line[3].parse::<isize>().unwrap()}))
                             .collect::<Vec<(&str, &str, isize)>>();
 
     let mut adj_m = if seating_data.len() == 56 {
@@ -117,7 +117,7 @@ fn heap_permutations(k: usize, perm: &mut Vec<usize>, all_perms: &mut Vec<Vec<us
 }
 
 fn calculate_costs(g: &Graph) -> isize {
-    let perms = get_all_circles(&g);
+    let perms = get_all_circles(g);
     let mut costs = Vec::new();
     let n_persons = g.adj_m.len();
     for perm in perms {

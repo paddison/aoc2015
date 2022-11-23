@@ -21,7 +21,7 @@ fn calculate_circuit(gates: HashMap<&'static str, Gate>) -> HashMap<&'static str
     let mut cache = HashMap::new();
 
     for (wire, gate) in &gates {
-        let _ = calculate_wire(wire, &gate, &mut cache, &gates);
+        let _ = calculate_wire(wire, gate, &mut cache, &gates);
     }
     
     cache

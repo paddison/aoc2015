@@ -37,18 +37,20 @@ fn test_string_p1(string: String) -> bool {
     }
     let mut vowel_count = 0;
     let mut chars = string.chars();
-    'outer: loop {
-        while let Some(c) = chars.next() {
-            if c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' {
-                vowel_count += 1;
-            }
-            if vowel_count == 3 {
-                break 'outer; 
-            }
+
+    for c in chars.by_ref() {
+        if c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' {
+            vowel_count += 1;
         }
-        return false;
+        if vowel_count == 3 {
+            break; 
+        }
     }
 
+    if vowel_count != 3 {
+        return false;
+    }
+    
     let mut chars = string.chars();
     let mut cur = chars.next().unwrap();
 

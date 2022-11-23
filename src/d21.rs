@@ -99,16 +99,16 @@ impl Equipment {
         min
     }
 
-    fn create_possible_equipments(&self, shop: &mut Vec<Item>) -> Vec<(usize, Equipment)> {
+    fn create_possible_equipments(&self, shop: &mut [Item]) -> Vec<(usize, Equipment)> {
         let mut equipments = Vec::<(usize, Equipment)>::new();
 
         for (i, item) in shop.iter().enumerate() {
-            let mut new_equipment = self.clone();
+            let mut new_equipment = *self;
             match &item {
                 Item::Weapon(_, _) => new_equipment.weapon = Some(*item),
                 Item::Armor(_, _) => new_equipment.armor = Some(*item),
                 _ => {
-                    let mut other_ring_slot = new_equipment.clone();
+                    let mut other_ring_slot = new_equipment;
                     new_equipment.ring_1 = Some(*item);
                     other_ring_slot.ring_2 = Some(*item);
                     equipments.push((i, other_ring_slot));

@@ -1,4 +1,4 @@
-use std::{ops::{Deref, DerefMut}, fmt::Display};
+use std::{ops::{Deref, DerefMut}, fmt::{Display, Write}};
 
 const N_WIDTH: usize = std::mem::size_of::<u64>() * 8;
 
@@ -71,7 +71,7 @@ impl Display for BinaryGrid {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let mut string = String::new();
         for (i, n) in self.lights.iter().enumerate() {
-            string += &format!("{:b}", n);
+            let _ = write!(string, "{:b}", n);
             if i % 16 == 0 {
                 string += "\n";
             }
@@ -179,7 +179,7 @@ impl BinaryGrid {
             return if width == 64 {
                 vec![u64::MAX]
             } else {
-                vec![((2_u64.pow(width as u32) - 1)) << (N_WIDTH - width) >> offset]
+                vec![(2_u64.pow(width as u32) - 1) << (N_WIDTH - width) >> offset]
             }
         }
 

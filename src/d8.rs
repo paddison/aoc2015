@@ -18,14 +18,14 @@ const HEX_PATTERNS: [&str; 256] = [
 
 // removes " at the beginning and the end
 fn parse(input: &'static str) -> Vec<&'static str> {
-    input.split("\n").map(|string| &string[1..string.len() - 1]).collect::<Vec<_>>()
+    input.split('\n').map(|string| &string[1..string.len() - 1]).collect::<Vec<_>>()
 }
 
 fn calculate_actual_length(string: &str, hex_patterns: &[&str]) -> usize {
     let hex_pattern_count = hex_patterns.iter().map(|pat| string.matches(pat).count()).sum::<usize>();
     string.len() 
-    - string.matches("\"").count() 
-    - string.matches("\\").count() 
+    - string.matches('\"').count() 
+    - string.matches('\\').count() 
     + string.matches("\\\"").count() 
     + string.matches("\\\\").count() 
     - hex_pattern_count * 2
@@ -33,8 +33,8 @@ fn calculate_actual_length(string: &str, hex_patterns: &[&str]) -> usize {
 
 fn calculate_encoded_length(string: &str) -> usize {
     string.len() 
-    + string.matches("\\").count()
-    + string.matches("\"").count()
+    + string.matches('\\').count()
+    + string.matches('\"').count()
     + 4 // encoded semicolons at the beginning and the end
     + 2 // two new semicolons at the beginning and the end
 }

@@ -22,7 +22,7 @@ fn sum_nums(json: Json) -> isize {
 
 fn do_obj(obj: HashMap<String, Json>) -> isize {
     // check if obj contains "red" as value
-    if obj.iter().find(|(_, v)| v == &&Json::String("red".to_string())).is_some() {
+    if obj.iter().any(|(_, v)| v == &Json::String("red".to_string())) {
         return 0;
     }
     let mut sum = 0;
@@ -75,12 +75,12 @@ impl JsonParser {
     fn parse_string(&mut self) -> String {
         self.move_cursor(1); // move cursor past the first "\""
 
-        let len = self.json_str[self.cursor..].find("\"").unwrap();
+        let len = self.json_str[self.cursor..].find('\"').unwrap();
         let string = String::from(&self.json_str[self.cursor..self.cursor + len]);
 
         self.move_cursor(len + 1); // move cursor to first char after \"
 
-        String::from(string)
+        string
     }
 
     // expects input to be starting from the first digit

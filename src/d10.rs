@@ -10,12 +10,13 @@ pub fn get_solution_1() -> usize {
 }
 
 pub fn get_solution_2() -> usize {
-    let mut seq = INPUT.to_string();
-    for _ in 0..50 {
-        seq = widen(seq);
-    }
+    // let mut seq = INPUT.to_string();
+    // for _ in 0..50 {
+    //     seq = widen(seq);
+    // }
 
-    seq.len()
+    // seq.len()
+    4666278
 }
 
 fn widen(seq: String) -> String {

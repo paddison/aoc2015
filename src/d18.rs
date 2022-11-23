@@ -41,10 +41,7 @@ impl Grid {
     }
 
     fn stays_on_p2(&self, row: usize, col: usize) -> bool {
-        if  row == 0 && col == 0 || 
-            row == 0 && col == self.dim.1 - 1 || 
-            row == self.dim.0 - 1 && col == 0 || 
-            row == self.dim.0 - 1 && col == self.dim.1 - 1 {
+        if (row == self.dim.0 - 1 || row == 0) && (col == self.dim.1 - 1 || col == 0) { // thanks clippy^^
             return true
         } 
         self.get_on_neighbours(row, col) == 2 || self.get_on_neighbours(row, col) == 3

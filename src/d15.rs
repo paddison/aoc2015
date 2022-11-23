@@ -86,11 +86,11 @@ fn calculate_prop(coeff: &[usize], ingredients: &[Ingr], prop: Prop) -> isize {
 }
 
 fn calculate_all(coeff: &[usize], ingr: &[Ingr]) -> (isize, isize, isize, isize, isize) {
-    let capacity = calculate_prop(&coeff, &ingr, Prop::Capacity);
-    let durability = calculate_prop(&coeff, &ingr, Prop::Durability);
-    let flavor = calculate_prop(&coeff, &ingr, Prop::Flavor);
-    let texture = calculate_prop(&coeff, &ingr, Prop::Texture);
-    let calories = calculate_prop(&coeff, &ingr, Prop::Calories);
+    let capacity = calculate_prop(coeff, ingr, Prop::Capacity);
+    let durability = calculate_prop(coeff, ingr, Prop::Durability);
+    let flavor = calculate_prop(coeff, ingr, Prop::Flavor);
+    let texture = calculate_prop(coeff, ingr, Prop::Texture);
+    let calories = calculate_prop(coeff, ingr, Prop::Calories);
 
     (capacity, durability, flavor, texture, calories)
 }
@@ -109,7 +109,7 @@ fn solve_recur(coeff: &mut [usize], ingr: &[Ingr], loop_depth: usize, vals: &mut
     if ingr.len() - 1 == loop_depth {
         coeff[loop_depth] = 100 - coeff[..loop_depth].iter().sum::<usize>();
 
-        let (capacity, durability, flavor, texture, calories) = calculate_all(&coeff, &ingr);
+        let (capacity, durability, flavor, texture, calories) = calculate_all(coeff, ingr);
 
         if capacity > 0 && durability > 0 && flavor > 0 && texture > 0 && calories == 500 {
             vals.push(capacity * durability * flavor * texture);

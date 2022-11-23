@@ -147,7 +147,7 @@ pub fn get_solution_1() -> usize {
     let instructions = parse(include_str!("../data//d23.txt"));
     let mut machine = Machine::new(instructions);
 
-    while let Some(_) = machine.exec_instruction() {}
+    while machine.exec_instruction().is_some() {}
 
     machine.b
 }
@@ -158,7 +158,7 @@ pub fn get_solution_2() -> usize {
 
     machine.a = 1;
 
-    while let Some(_) = machine.exec_instruction() {}
+    while machine.exec_instruction().is_some() {}
 
     machine.b
 }
@@ -168,7 +168,7 @@ fn test_machine() {
     let instructions = parse(include_str!("../data//d23_test.txt"));
     let mut machine = Machine::new(instructions);
 
-    while let Some(_) = machine.exec_instruction() {}
+    while machine.exec_instruction().is_some() {}
 
     println!("{}", machine.a);
 }
